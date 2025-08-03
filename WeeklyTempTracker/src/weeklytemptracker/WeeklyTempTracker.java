@@ -8,10 +8,10 @@ public class WeeklyTempTracker {
         ArrayList<String> days = new ArrayList<>();
         ArrayList<Double> temperatures = new ArrayList<>();
 
-        // Pre-load the list of days to match the assignment expectation
+        // Pre-load the list of days 
         String[] weekDays = {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"};
 
-        // Ask user how they'd like to interact
+        // Prompt User
         System.out.print("Enter a day of the week (e.g., Monday) to see temperature, or type \"week\" to enter data for the full week: ");
         String choice = input.nextLine();
 
