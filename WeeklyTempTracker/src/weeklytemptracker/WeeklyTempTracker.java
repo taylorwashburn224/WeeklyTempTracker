@@ -3,40 +3,53 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class WeeklyTempTracker {
+    public static void main(String[] args) {
+        Scanner input = new Scanner(System.in);
+        ArrayList<String> days = new ArrayList<>();
+        ArrayList<Double> temperatures = new ArrayList<>();
 
-	public static void main(String[] args) {
-		Scanner scanner = new Scanner(System.in);
-		
-		ArrayList<String> days = new ArrayList<>();
-		ArrayList<Double> temperatures = new ArrayList<>();
-		
-		days.add("Monday"); temperatures.add(68.5);
-		days.add("Tuesday"); temperatures.add(70.2);
-		days.add("Wednesday"); temperatures.add(73.1);
-		days.add("Thursday"); temperatures.add(71.4);
-		days.add("Friday"); temperatures.add(69.8);
-		days.add("Saturday"); temperatures.add(72.0);
-		days.add("Sunday"); temperatures.add(70.5);
-		
-		System.out.print("Enter a day of the week or type 'week': ");
-		String input = scanner.nextLine().trim();
-		
-		if (days.contains(input)) {
-			int index = days.indexOf(input);
-			System.out.println("Temperature for " + input + ": " + temperatures.get(index) + "°F");
-		} else if (input.equals("week")) {
-			double total = 0.0;
-			System.out.println("\nWeekly Temperatures:");
-			for (int i = 0; i < days.size(); i++) {
-				System.out.println(days.get(i) + ": " + temperatures.get(i) + "°F");
-				total += temperatures.get(i);
-			}
-			double average = total / temperatures.size();
-			System.out.printf("\nWeekly Average: %.2f°F\n", average);
-		} else {
-			System.out.println("Invalid input. Please enter a valid day or 'week'.");
-		}
-		scanner.close();
-	}
+        // Pre-load the list of days to match the assignment expectation
+        String[] weekDays = {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"};
 
+        // Ask user how they'd like to interact
+        System.out.print("Enter a day of the week (e.g., Monday) to see temperature, or type \"week\" to enter data for the full week: ");
+        String choice = input.nextLine();
+
+        if (choice.equalsIgnoreCase("week")) {
+            // Collect temperatures for the full week
+            for (String day : weekDays) {
+                System.out.print("Enter average temperature for " + day + ": ");
+                double temp = Double.parseDouble(input.nextLine());
+                days.add(day);
+                temperatures.add(temp);
+            }
+
+            // Display summary
+            double total = 0;
+            System.out.println("\nTemperatures for the week:");
+            for (int i = 0; i < days.size(); i++) {
+                System.out.println(days.get(i) + ": " + temperatures.get(i) + "°F");
+                total += temperatures.get(i);
+            }
+            double average = total / temperatures.size();
+            System.out.printf("Weekly average temperature: %.2f°F\n", average);
+
+        } else {
+            // Only prompt for that day's temperature
+            boolean isValidDay = false;
+            for (String day : weekDays) {
+                if (day.equalsIgnoreCase(choice)) {
+                    System.out.print("Enter temperature for " + day + ": ");
+                    double temp = Double.parseDouble(input.nextLine());
+                    System.out.println(day + ": " + temp + "°F");
+                    isValidDay = true;
+                    break;
+                }
+            }
+            if (!isValidDay) {
+                System.out.println("Invalid day. Please restart and enter a valid day name.");
+            }
+        }
+        input.close();
+    }
 }
